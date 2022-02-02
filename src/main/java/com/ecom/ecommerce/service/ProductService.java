@@ -1,7 +1,7 @@
 package com.ecom.ecommerce.service;
 
-import com.ecom.ecommerce.model.Product;
-import com.ecom.ecommerce.repository.ProductRepository;
+import com.ecom.ecommerce.dao.ProductDao;
+import com.ecom.ecommerce.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,29 +10,23 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-
     @Autowired
-    ProductRepository productRepository;
+    ProductDao productDao;
 
-    public List<Product> getAllProduct(){
-        return this.productRepository.findAll();
-    }
-
-    public  void addProduct(Product product){
-        this.productRepository.save(product);
+    public List<Product> findProduct(Integer catId) {
+        return productDao.findProduct(catId);
     }
 
-    public void removeProductById(Long id){
-        this.productRepository.deleteById(id);
+    public Product saveProduct(Product product) {
+        return productDao.save(product);
     }
-    public Optional<Product> getProduct(Long id){
-      return this.productRepository.findById(id);
+
+    public List<Product> getAllProducts() {
+        return productDao.findAll();
     }
-    public List<Product> getAllProductByCategoryId(Integer id){
-        return this.productRepository.findAllByCategory_id(id);
-    }
-    public void deleteProductBy(Long id){
-        this.productRepository.deleteById(id);
+
+    public Optional<Product> findProductById(Integer id) {
+        return productDao.findById(id);
     }
 
 }
